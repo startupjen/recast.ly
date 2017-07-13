@@ -2,26 +2,26 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    //when someone clicks VideoListEntry,
-    //re-renders on the App
-    //gets the clicked on video
-    
-    //how do you get the video clicked on?
-    //bind passes the object
-    //app passes it into render and re-renders
+    this.state = {
+      currentPlayerVideo: window.exampleVideoData[0]
+    };
   }
 
-  
+  onVideoEntryClick(video) {
+    this.setState({
+      currentPlayerVideo: video
+    });
+  }
 
-  render(videoToPlay) {
+  render() {
     return (
       <div>
         <Nav />
         <div className="col-md-7">
-          <VideoPlayer video={window.exampleVideoData[0]}/>
+          <VideoPlayer video={this.state.currentPlayerVideo}/>
         </div>
         <div className="col-md-5">
-          <VideoList videos={window.exampleVideoData} />
+          <VideoList videos={window.exampleVideoData} click={this.onVideoEntryClick.bind(this)} />
         </div>
       </div>
     );
