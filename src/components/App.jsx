@@ -8,7 +8,7 @@ class App extends React.Component {
     };
   }
 
-  ComponentDidMount() {
+  componentDidMount() {
     searchYouTube('ham and cheese');
   }
 
@@ -16,6 +16,10 @@ class App extends React.Component {
     this.setState({
       currentPlayerVideo: video
     });
+  }
+
+  setVideos(videoData) {
+    this.setState({currentPlayerVideo: videoData[0], videos: videoData});
   }
 
   onSearchButtonClick(searchTerm) {
@@ -27,18 +31,9 @@ class App extends React.Component {
       key: window.YOUTUBE_API_KEY
     };
 
-    let getFetchedData = function(items) {
-      videos = items.map( item => Object.assign({}, item) );
-      console.log('the VIDEOS are in getFetchedData: ' + videos);
-      //if this is successful, can pass the change to here
-    };
-
-    searchYouTube(searchObject, getFetchedData);
+    searchYouTube(searchObject, this.setVideos.bind(this));
     
-    console.log('the VIDEOS are in onSearchButtonClick: ' + videos);
-
-    this.setState({ videos: videos} );    
-
+    console.log('the VIDEOS are in onSearchButtonClick: ');
   }
 
   render() {
@@ -49,7 +44,7 @@ class App extends React.Component {
           <VideoPlayer video={this.state.currentPlayerVideo}/>
         </div>
         <div className="col-md-5">
-          <VideoList videos={window.exampleVideoData} click={this.onVideoEntryClick.bind(this)} />
+          <VideoList videos={this.state.videos} click={this.onVideoEntryClick.bind(this)} />
         </div>
       </div>
     );
