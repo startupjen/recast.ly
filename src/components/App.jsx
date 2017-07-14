@@ -3,7 +3,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      currentPlayerVideo: window.exampleVideoData[0]
+      currentPlayerVideo: window.exampleVideoData[0],
+      videos: window.exampleVideoData
     };
   }
 
@@ -13,10 +14,22 @@ class App extends React.Component {
     });
   }
 
+  onSearchButtonClick(searchTerm) {
+    searchObject = {
+      query: searchTerm,
+      max: 2,
+      API_KEY: window.YOUTUBE_API_KEY
+    };
+
+    searchYouTube(searchObject, callback);
+
+
+  }
+
   render() {
     return (
       <div>
-        <Nav />
+        <Nav onSearchButtonClick={this.onSearchButtonClick.bind(this)} />
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentPlayerVideo}/>
         </div>
@@ -27,20 +40,6 @@ class App extends React.Component {
     );
   }
 }
-
-/*
-var App = (props) => (
-  <div>
-    <Nav />
-    <div className="col-md-7">
-      <VideoPlayer video={window.exampleVideoData[0]}/>
-    </div>
-    <div className="col-md-5">
-      <VideoList videos={window.exampleVideoData} />
-    </div>
-  </div>
-);
-*/
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
