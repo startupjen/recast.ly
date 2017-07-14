@@ -9,7 +9,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    searchYouTube('ham and cheese');
+    searchYouTube({ key: window.YOUTUBE_API_KEY, query: 'react', max: 5 }, this.setVideos.bind(this));
   }
 
   onVideoEntryClick(video) {
@@ -39,7 +39,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav onSearchButtonClick={this.onSearchButtonClick.bind(this)} />
+        <Nav onSearchButtonClick={this.onSearchButtonClick.bind(this)}  />
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentPlayerVideo}/>
         </div>
