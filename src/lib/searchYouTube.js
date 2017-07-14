@@ -1,6 +1,7 @@
 var searchYouTube = (options, callback) => {
   let url = 'https://www.googleapis.com/youtube/v3/search';
   let hasCallback = typeof callback === 'function';
+  let videos = [];
 
   $.get('https://www.googleapis.com/youtube/v3/search', 
     {
@@ -10,7 +11,9 @@ var searchYouTube = (options, callback) => {
       key: options.key,
       type: 'video',
     }
-  ).done(function(data) { console.log(data); callback(data.items); }).fail(function() { console.log('i failed'); } );
+  ).done((data) => { callback(data.items); console.log('I twas successful!'); } ).fail(function() { console.log('i failed'); } );
+
+
 };
 
 window.searchYouTube = searchYouTube;

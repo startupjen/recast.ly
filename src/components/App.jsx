@@ -8,6 +8,10 @@ class App extends React.Component {
     };
   }
 
+  ComponentDidMount() {
+    searchYouTube('ham and cheese');
+  }
+
   onVideoEntryClick(video) {
     this.setState({
       currentPlayerVideo: video
@@ -15,14 +19,25 @@ class App extends React.Component {
   }
 
   onSearchButtonClick(searchTerm) {
-    searchObject = {
+    let videos = [];
+
+    let searchObject = {
       query: searchTerm,
-      max: 2,
-      API_KEY: window.YOUTUBE_API_KEY
+      max: 5,
+      key: window.YOUTUBE_API_KEY
     };
 
-    searchYouTube(searchObject, callback);
+    let getFetchedData = function(items) {
+      videos = items.map( item => Object.assign({}, item) );
+      console.log('the VIDEOS are in getFetchedData: ' + videos);
+      //if this is successful, can pass the change to here
+    };
 
+    searchYouTube(searchObject, getFetchedData);
+    
+    console.log('the VIDEOS are in onSearchButtonClick: ' + videos);
+
+    this.setState({ videos: videos} );    
 
   }
 
